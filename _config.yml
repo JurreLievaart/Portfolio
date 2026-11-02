@@ -1,0 +1,51 @@
+# Instellingen voor je site. Pas de waarden hieronder aan.
+# Na een wijziging in dit bestand duurt het even voordat GitHub Pages de site opnieuw heeft opgebouwd.
+
+title: "Jurre Lievaart"
+tagline: "Student Werktuigbouwkunde"
+description: "[VERVANG] Portfolio van een student Werktuigbouwkunde: cv, projecten en contactgegevens."
+lang: nl
+
+# Adres van je site, zonder slash aan het eind.
+# Voorbeeld: https://jouwgebruikersnaam.github.io
+# Staat dit leeg, dan werkt de site nog steeds, maar zijn de sitemap en canonical-links onvolledig.
+url: "https://JurreLievaart.github.io"
+# Laat leeg als je repository "jouwgebruikersnaam.github.io" heet.
+# Heet je repository anders (bijv. "portfolio"), vul dan "/portfolio" in.
+baseurl: "/Portfolio"
+
+# Contactgegevens (worden op de Contact-pagina getoond).
+email: "22152490@student.hhs.nl"   # [VERVANG]
+linkedin: "https://www.linkedin.com/in/jurre-lievaart-400159373/"                     # Volledige URL, bijv. https://www.linkedin.com/in/jouw-profiel. Leeg = niet tonen.
+github: "https://github.com/JurreLievaart"                       # Volledige URL, bijv. https://github.com/jouwgebruikersnaam. Leeg = niet tonen.
+
+# Menu in de header. Voeg een regel toe om een nieuwe pagina in het menu te zetten.
+nav:
+  - title: Home
+    url: /
+  - title: CV
+    url: /cv/
+  - title: Projecten
+    url: /projecten/
+  - title: Contact
+    url: /contact/
+
+# Projecten staan als losse bestanden in de map _projects.
+collections:
+  projects:
+    output: true
+    permalink: /projecten/:name/
+
+defaults:
+  - scope:
+      path: ""
+      type: projects
+    values:
+      layout: project
+
+# Projecten met een datum in de toekomst toch tonen.
+future: true
+
+# Bestanden die niet op de site horen.
+exclude:
+  - README.md

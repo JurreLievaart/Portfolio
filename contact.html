@@ -1,0 +1,31 @@
+---
+layout: default
+title: Contact
+description: "Neem contact op via e-mail."
+permalink: /contact/
+---
+<header class="page-head">
+  <h1>Contact</h1>
+  <p class="lead">[VERVANG] Heb je een vraag, een stageplek of een project waar je over wilt praten? Stuur me gerust een bericht.</p>
+</header>
+
+<section class="section" aria-label="Contactgegevens">
+  <ul class="rows">
+    <li>
+      <p class="label">E-mail</p>
+      <div><a href="mailto:{{ site.email }}">{{ site.email }}</a></div>
+    </li>
+    {%- if site.linkedin != "" %}
+    <li>
+      <p class="label">LinkedIn</p>
+      <div><a href="{{ site.linkedin }}">{{ site.linkedin | remove: 'https://' | remove: 'www.' }}</a></div>
+    </li>
+    {%- endif %}
+    {%- if site.github != "" %}
+    <li>
+      <p class="label">GitHub</p>
+      <div><a href="{{ site.github }}">{{ site.github | remove: 'https://' | remove: 'www.' }}</a></div>
+    </li>
+    {%- endif %}
+  </ul>
+</section>

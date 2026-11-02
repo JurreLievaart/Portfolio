@@ -1,0 +1,21 @@
+---
+layout: default
+---
+<section class="hero has-photo">
+  <div>
+    <p class="label">{{ site.tagline }}</p>
+    <h1>{{ site.title }}</h1>
+    <p class="lead">Jouw introductietekst.</p>
+    <p class="actions">
+      <a class="btn" href="{{ '/projecten/' | relative_url }}">Bekijk projecten</a>
+      <a class="btn btn-secondary" href="{{ '/contact/' | relative_url }}">Neem contact op</a>
+    </p>
+  </div>
+  <img class="portrait" src="{{ '/assets/portret.webp' | relative_url }}" alt="Portret van Jurre Lievaart" width="320" height="400" decoding="async">
+</section>
+
+<section class="section" aria-labelledby="recent">
+  <h2 id="recent">Recente projecten</h2>
+  {% include project-list.html limit=3 %}
+  <p class="more"><a href="{{ '/projecten/' | relative_url }}">Alle projecten →</a></p>
+</section>
