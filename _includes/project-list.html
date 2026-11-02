@@ -1,0 +1,39 @@
+{%- comment -%}
+  Lijst met projecten, nieuwste eerst.
+  Gebruik: {% include project-list.html %} of {% include project-list.html limit=3 heading="h2" %}
+  heading is het kopniveau van de projecttitels (standaard h3).
+{%- endcomment -%}
+{%- assign list = site.projects | sort: 'date' | reverse -%}
+{%- assign total = list.size -%}
+{%- assign max = include.limit | default: 999 -%}
+{%- assign h = include.heading | default: 'h3' -%}
+{%- if total == 0 %}
+<p>Er staan nog geen projecten op deze pagina.</p>
+{%- else %}
+<ol class="projects">
+  {%- for p in list limit: max %}
+  {%- assign nr = total | minus: forloop.index0 | prepend: '0' | slice: -2, 2 %}
+  <li class="project{% unless p.cover %} no-cover{% endunless %}">
+    {%- if p.cover %}
+    <a class="project-thumb" href="{{ p.url | relative_url }}" tabindex="-1" aria-hidden="true">
+      <img src="{{ '/assets/projects/' | append: p.slug | append: '/' | append: p.cover | relative_url }}" alt="" loading="lazy" decoding="async">
+    </a>
+    {%- endif %}
+    <div>
+      <p class="label">Project {{ nr }} · {{ p.date | date: '%Y' }}</p>
+      <{{ h }}><a href="{{ p.url | relative_url }}">{{ p.title }}</a></{{ h }}>
+      {%- if p.summary %}
+      <p>{{ p.summary }}</p>
+      {%- endif %}
+      {%- if p.tags %}
+      <ul class="tags" aria-label="Onderwerpen">
+        {%- for tag in p.tags %}
+        <li>{{ tag }}</li>
+        {%- endfor %}
+      </ul>
+      {%- endif %}
+    </div>
+  </li>
+  {%- endfor %}
+</ol>
+{%- endif %}

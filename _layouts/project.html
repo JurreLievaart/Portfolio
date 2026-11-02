@@ -1,0 +1,57 @@
+---
+layout: default
+---
+{%- assign folder = '/assets/projects/' | append: page.slug | append: '/' -%}
+<article>
+  <a class="back" href="{{ '/projecten/' | relative_url }}">← Alle projecten</a>
+
+  <header class="page-head">
+    <p class="label">{{ page.date | date: '%Y' }}</p>
+    <h1>{{ page.title }}</h1>
+    {%- if page.summary %}
+    <p class="lead">{{ page.summary }}</p>
+    {%- endif %}
+    {%- if page.tags %}
+    <ul class="tags" aria-label="Onderwerpen">
+      {%- for tag in page.tags %}
+      <li>{{ tag }}</li>
+      {%- endfor %}
+    </ul>
+    {%- endif %}
+  </header>
+
+  <div class="prose">
+    {{ content }}
+  </div>
+
+  {%- if page.images %}
+  <section class="section" aria-labelledby="fotos">
+    <h2 id="fotos">Foto's</h2>
+    <ul class="gallery">
+      {%- for img in page.images %}
+      <li>
+        <figure>
+          <a href="{{ folder | append: img.file | relative_url }}">
+            <img src="{{ folder | append: img.file | relative_url }}" alt="{{ img.alt | escape }}" loading="lazy" decoding="async">
+          </a>
+          {%- if img.caption %}
+          <figcaption>{{ img.caption }}</figcaption>
+          {%- endif %}
+        </figure>
+      </li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+
+  {%- if page.pdfs %}
+  <section class="section" aria-labelledby="documenten">
+    <h2 id="documenten">Documenten</h2>
+    <ul class="files">
+      {%- for doc in page.pdfs %}
+      <li><a href="{{ folder | append: doc.file | relative_url }}"><span class="label">PDF</span> {{ doc.title }}</a></li>
+      {%- endfor %}
+    </ul>
+  </section>
+  {%- endif %}
+</article>

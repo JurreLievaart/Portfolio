@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="{{ site.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- if page.title %}
+  {%- capture full_title %}{{ page.title }} · {{ site.title }}{% endcapture %}
+  {%- else %}
+  {%- capture full_title %}{{ site.title }} – {{ site.tagline }}{% endcapture %}
+  {%- endif %}
+  {%- assign meta_description = page.summary | default: page.description | default: site.description %}
+  <title>{{ full_title | strip_html | escape }}</title>
+  <meta name="description" content="{{ meta_description | strip_html | escape }}">
+  {%- if site.url != "" %}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  {%- endif %}
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:title" content="{{ full_title | strip_html | escape }}">
+  <meta property="og:description" content="{{ meta_description | strip_html | escape }}">
+  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/assets/css/styles.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip" href="#inhoud">Direct naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <nav aria-label="Hoofdmenu">
+        <ul>
+          {%- for item in site.nav %}
+          {%- assign current = false %}
+          {%- if item.url == "/" %}
+            {%- if page.url == "/" %}{% assign current = true %}{% endif %}
+          {%- elsif page.url contains item.url %}
+            {%- assign current = true %}
+          {%- endif %}
+          <li><a href="{{ item.url | relative_url }}"{% if current %} aria-current="{% if page.url == item.url %}page{% else %}true{% endif %}"{% endif %}>{{ item.title }}</a></li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhoud" class="wrap">
+    {{ content }}
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <dl class="titleblock">
+        <div><dt>Naam</dt><dd>{{ site.title }}</dd></div>
+        <div><dt>Studie</dt><dd>{{ site.tagline }}</dd></div>
+        <div><dt>Laatst bijgewerkt</dt><dd><time datetime="{{ site.time | date: '%Y-%m-%d' }}">{{ site.time | date: '%d-%m-%Y' }}</time></dd></div>
+      </dl>
+    </div>
+  </footer>
+</body>
+</html>
