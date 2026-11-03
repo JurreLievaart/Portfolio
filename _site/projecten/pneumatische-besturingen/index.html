@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pneumatische besturingen · Jurre Lievaart</title>
+  <meta name="description" content="Practicum Besturingstechniek: een volledig pneumatische besturing ontworpen met een WST-diagram, gesimuleerd in Fluidsim en gebouwd op een Festobord.">
+  <link rel="canonical" href="http://localhost:4000/projecten/pneumatische-besturingen/">
+  <meta property="og:url" content="http://localhost:4000/projecten/pneumatische-besturingen/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:title" content="Pneumatische besturingen · Jurre Lievaart">
+  <meta property="og:description" content="Practicum Besturingstechniek: een volledig pneumatische besturing ontworpen met een WST-diagram, gesimuleerd in Fluidsim en gebouwd op een Festobord.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#inhoud">Direct naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Jurre Lievaart</a>
+      <nav aria-label="Hoofdmenu">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/cv/">CV</a></li>
+          <li><a href="/projecten/" aria-current="true">Projecten</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhoud" class="wrap">
+    <article>
+  <a class="back" href="/projecten/">← Alle projecten</a>
+
+  <header class="page-head">
+    <p class="label">2026</p>
+    <h1>Pneumatische besturingen</h1>
+    <p class="lead">Practicum Besturingstechniek: een volledig pneumatische besturing ontworpen met een WST-diagram, gesimuleerd in Fluidsim en gebouwd op een Festobord.</p>
+    <ul class="tags" aria-label="Onderwerpen">
+      <li>Pneumatiek</li>
+      <li>Besturingstechniek</li>
+      <li>Fluidsim</li>
+      <li>Festo</li>
+    </ul>
+  </header>
+
+  <div class="prose">
+    <p>Practicum van het vak Besturingstechniek (BARS3a) aan TIS Delft. Het doel was een besturing te ontwerpen, te simuleren en te bouwen waarbij <strong>alles pneumatisch</strong> gebeurt: eindstandmelders, logische ventielen en geheugens bepalen samen de volgorde van de cilinderbewegingen.</p>
+
+<h2 id="aanpak">Aanpak</h2>
+
+<p>Het practicum bestond uit vier deelopdrachten:</p>
+
+<ol>
+  <li>Besturingsformules afleiden uit een gegeven WST-diagram van een persinstallatie voor lagerbussen.</li>
+  <li>Zelf een WST-diagram en de formules opstellen voor een overzetstation voor verpakkingen.</li>
+  <li>Dit ontwerp simuleren in Fluidsim.</li>
+  <li>Het ontwerp bouwen en testen op het Festobord.</li>
+</ol>
+
+<h2 id="het-ontwerp-overzetstation">Het ontwerp: overzetstation</h2>
+
+<p>Het overzetstation heeft drie cilinders. Cilinder A (bistabiel) schuift een verpakking op de tiltafel en gaat terug. Cilinder B (bistabiel) heft de lift. Cilinder C (monostabiel) kiept de tafel en houdt dit 5 seconden vast. Daarna gaat eerst C terug en dan B.</p>
+
+<p>Stappen met dezelfde eindstanden zijn te onderscheiden met <strong>één ongelijkmaakgeheugen</strong> (signaal q). Alleen het eerste commando bevat alle beginstand-elementen, zodat de installatie niet start als een cilinder verkeerd staat. De andere commando’s hebben genoeg aan één of twee signalen. Door de formules eerst te vereenvoudigen waren weinig componenten nodig.</p>
+
+<h2 id="simulatie-en-bouw">Simulatie en bouw</h2>
+
+<p>De formules zijn één op één omgezet naar een Fluidsim-model, opgebouwd in drie lagen: de sensoren onderaan, de besturingslogica in het midden en de ventielen en cilinders bovenaan. Zo lopen er weinig lijnen kruiselings. Daarna heb ik hetzelfde model met dezelfde componenten op het Festobord gebouwd.</p>
+
+<p>Bij het testen controleerde ik eerst de beginstand. Daarna zette ik de startknop aan en vergeleek ik de volgorde van de bewegingen met het WST-diagram. Tot slot zette ik de startknop midden in een cyclus uit, om te controleren dat de cyclus wordt afgemaakt en de installatie in de beginstand stopt.</p>
+
+<h2 id="foutzoeken">Foutzoeken</h2>
+
+<p>Twee problemen kwamen tijdens het bouwen naar voren:</p>
+
+<ul>
+  <li>Een plakkend Q-ventiel. Na vervanging, en met hulp van de docent, kon ik de leidingen terugvolgen tot het ventiel.</li>
+  <li>Een compressor die te hoog stond en voor onverwachte uitvoer zorgde. Met een smoorventiel werd dat opgelost, en later vond ik ook de oorzaak.</li>
+</ul>
+
+<h2 id="resultaat">Resultaat</h2>
+
+<p>Voor beide installaties zijn met een WST-diagram de besturingsformules opgesteld en vereenvoudigd. De Fluidsim-simulatie van het overzetstation volgde het WST-diagram, en het ontwerp is daarna op het Festobord gebouwd.</p>
+
+  </div>
+  <section class="section" aria-labelledby="fotos">
+    <h2 id="fotos">Foto's</h2>
+    <ul class="gallery">
+      <li>
+        <figure>
+          <a href="/assets/projects/pneumatische-besturingen/festobord.webp">
+            <img src="/assets/projects/pneumatische-besturingen/festobord.webp" alt="Festobord met pneumatische cilinders, ventielen en blauwe en witte slangen, opgebouwd volgens het ontwerp" loading="lazy" decoding="async">
+          </a>
+          <figcaption>De besturing nagebouwd op het Festobord</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <a href="/assets/projects/pneumatische-besturingen/fluidsim-simulatie.webp">
+            <img src="/assets/projects/pneumatische-besturingen/fluidsim-simulatie.webp" alt="Fluidsim-schema van het overzetstation tijdens de simulatie, met onder druk staande leidingen in donkerblauw" loading="lazy" decoding="async">
+          </a>
+          <figcaption>Simulatie van het overzetstation in Fluidsim tijdens de cyclus</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <a href="/assets/projects/pneumatische-besturingen/wst-diagram.webp">
+            <img src="/assets/projects/pneumatische-besturingen/wst-diagram.webp" alt="Zelf opgesteld WST-diagram met de bewegingen van cilinder A, B en C, de signalen en de commando&#39;s" loading="lazy" decoding="async">
+          </a>
+          <figcaption>Zelf opgesteld WST-diagram van het overzetstation</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </section>
+  <section class="section" aria-labelledby="documenten">
+    <h2 id="documenten">Documenten</h2>
+    <ul class="files">
+      <li><a href="/assets/projects/pneumatische-besturingen/verslag-pneumatische-besturingen.pdf"><span class="label">PDF</span> Volledig practicumverslag</a></li>
+    </ul>
+  </section>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <dl class="titleblock">
+        <div><dt>Naam</dt><dd>Jurre Lievaart</dd></div>
+        <div><dt>Studie</dt><dd>Student Werktuigbouwkunde</dd></div>
+        <div><dt>Laatst bijgewerkt</dt><dd><time datetime="2026-11-03">03-11-2026</time></dd></div>
+      </dl>
+    </div>
+  </footer>
+</body>
+</html>

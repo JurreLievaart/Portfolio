@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Geregelde RC-DAC · Jurre Lievaart</title>
+  <meta name="description" content="Practicum Regeltechniek: een Arduino met RC-filter als digitaal-naar-analoog-omzetter (DAC), met een P- en PI-regelaar die de uitgang ook onder belasting op het setpoint houdt.">
+  <link rel="canonical" href="http://localhost:4000/projecten/rc-dac-regeling/">
+  <meta property="og:url" content="http://localhost:4000/projecten/rc-dac-regeling/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="nl_NL">
+  <meta property="og:title" content="Geregelde RC-DAC · Jurre Lievaart">
+  <meta property="og:description" content="Practicum Regeltechniek: een Arduino met RC-filter als digitaal-naar-analoog-omzetter (DAC), met een P- en PI-regelaar die de uitgang ook onder belasting op het setpoint houdt.">
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/css/styles.css">
+</head>
+<body>
+  <a class="skip" href="#inhoud">Direct naar de inhoud</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="brand" href="/">Jurre Lievaart</a>
+      <nav aria-label="Hoofdmenu">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/cv/">CV</a></li>
+          <li><a href="/projecten/" aria-current="true">Projecten</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="inhoud" class="wrap">
+    <article>
+  <a class="back" href="/projecten/">← Alle projecten</a>
+
+  <header class="page-head">
+    <p class="label">2026</p>
+    <h1>Geregelde RC-DAC</h1>
+    <p class="lead">Practicum Regeltechniek: een Arduino met RC-filter als digitaal-naar-analoog-omzetter (DAC), met een P- en PI-regelaar die de uitgang ook onder belasting op het setpoint houdt.</p>
+    <ul class="tags" aria-label="Onderwerpen">
+      <li>Regeltechniek</li>
+      <li>Arduino</li>
+      <li>PID</li>
+      <li>Elektronica</li>
+    </ul>
+  </header>
+
+  <div class="prose">
+    <p>Practicum van het vak Regeltechniek (BARS2) aan TIS Delft. Een Arduino kan geen echte analoge spanning maken, alleen een PWM-signaal van 0 of 5 V. Met een RC-laagdoorlaatfilter wordt dat signaal gemiddeld tot een gelijkspanning tussen 0 en 5 V: een eenvoudige <strong>DAC</strong> (digitaal-naar-analoog-omzetter). Ik heb deze RC-DAC gebouwd en er een regelaar aan toegevoegd, zodat de uitgang ook onder belasting het setpoint volgt.</p>
+
+<h2 id="aanpak">Aanpak</h2>
+
+<p>Het practicum bestond uit vier deelopdrachten:</p>
+
+<ol>
+  <li>De schakeling en software opbouwen en in open-loop laten werken.</li>
+  <li>Meetdata in open-loop verzamelen en verwerken.</li>
+  <li>De regellus sluiten met een P-regelaar.</li>
+  <li>De regelaar tunen.</li>
+</ol>
+
+<h2 id="de-schakeling">De schakeling</h2>
+
+<p>Pin 9 van de Arduino geeft het PWM-signaal via een weerstand van 2,2 kΩ naar een condensator van 470 µF. De spanning over die condensator is de uitgang en wordt gemeten op een analoge ingang. Het setpoint komt van een potmeter. Met twee drukknoppen sluit ik een van twee lasten aan.</p>
+
+<p>De tijdconstante van het filter is ongeveer 1 s, dus na ongeveer 5 s staat de uitgang op zijn eindwaarde. Een last vormt met de weerstand een spanningsdeler en verlaagt daardoor de versterking: zonder last is de maximale uitgang 5,00 V, met de last van 30 kΩ 4,66 V en met de last van 2,2 kΩ nog maar 2,50 V.</p>
+
+<h2 id="software">Software</h2>
+
+<p>In de code van de docent heb ik vijf regels ingevuld: de afgeleiden van setpoint en uitgang, de fout, de integraal en de regelwet. Een valkuil bij het omrekenen tussen ADC-waarde, volt en PWM: zonder “.0” wordt 5/1023 een deling van gehele getallen en is de uitkomst 0.</p>
+
+<h2 id="meten-en-regelen">Meten en regelen</h2>
+
+<ul>
+  <li><strong>Open-loop:</strong> de uitgang volgt elke stap volgens een eerste-orde laadcurve. Zonder last komt de uitgang op het setpoint uit.</li>
+  <li><strong>P-regelaar (Kp = 1):</strong> zonder last volgt de uitgang het setpoint binnen 1% en bereikt hij het setpoint na een stap binnen ongeveer 2 s, sneller dan in open-loop. Met de last van 30 kΩ blijft een offset van ongeveer 4–5% over (8% bij 5 V), wat binnen de eis van 15% blijft. Met de last van 2,2 kΩ is de offset 34% en komt de uitgang boven 2,5 V niet uit: de spanningsdeler laat dan hoe dan ook maximaal 2,5 V toe.</li>
+  <li><strong>Tunen:</strong> de Arduino testte automatisch meerdere instellingen en telde per test de absolute fout over de hele testserie op. Een hogere Kp geeft een kleinere fout, maar de winst wordt steeds kleiner. Het RC-circuit is een eerste-orde systeem en wordt daardoor niet instabiel. In overleg met de docent ben ik verdergegaan met Kp = 1000.</li>
+  <li><strong>PI-regelaar:</strong> bij Kp = 1000 verschilde de fout tussen de Ki-waarden maar 0,03 V·s, binnen de meetonnauwkeurigheid. Met zo’n hoge Kp is de offset al kleiner dan één ADC-stap, dus de I-actie heeft niets meer weg te regelen.</li>
+</ul>
+
+<h2 id="foutzoeken">Foutzoeken</h2>
+
+<p>Tijdens de opbouw bleef de uitgang steeds hangen op 1,75 V. Door onderdelen één voor één los te halen bleek de condensator kapot. Na vervanging werkte de schakeling.</p>
+
+<h2 id="resultaat">Resultaat</h2>
+
+<p>Met een PWM-signaal en een RC-filter is een werkende DAC gemaakt die in open-loop het setpoint volgt. Een P-regelaar met Kp = 1 maakt het systeem sneller en houdt zonder last de offset onder 1%, maar onder zware last blijft 34% offset over. Een hogere Kp verkleint de fout steeds verder. Bij dit eerste-orde systeem kan Kp zeer hoog worden zonder instabiliteit, en de I-actie voegt bij die Kp niets meetbaars toe.</p>
+
+  </div>
+  <section class="section" aria-labelledby="fotos">
+    <h2 id="fotos">Foto's</h2>
+    <ul class="gallery">
+      <li>
+        <figure>
+          <a href="/assets/projects/rc-dac-regeling/breadboard.webp">
+            <img src="/assets/projects/rc-dac-regeling/breadboard.webp" alt="Breadboard met een Arduino-kabelbundel, twee drukknoppen, een potmeter, weerstanden en een condensator" loading="lazy" decoding="async">
+          </a>
+          <figcaption>De RC-DAC opgebouwd op een breadboard</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <a href="/assets/projects/rc-dac-regeling/p-regelaar-zonder-last.webp">
+            <img src="/assets/projects/rc-dac-regeling/p-regelaar-zonder-last.webp" alt="Grafiek van setpoint, uitgang en stuursignaal in volt tegen de tijd, met eronder de regelfout; de uitgang volgt het setpoint na elke stap" loading="lazy" decoding="async">
+          </a>
+          <figcaption>P-regelaar (Kp = 1) zonder last: de uitgang volgt het setpoint</figcaption>
+        </figure>
+      </li>
+      <li>
+        <figure>
+          <a href="/assets/projects/rc-dac-regeling/fout-per-kp.webp">
+            <img src="/assets/projects/rc-dac-regeling/fout-per-kp.webp" alt="Lijngrafiek van de absolute fout tegen Kp: de fout daalt van 31,68 bij Kp 0,5 naar 24,18 bij Kp 20" loading="lazy" decoding="async">
+          </a>
+          <figcaption>Absolute fout per Kp (P-regelaar, last van 30 kΩ)</figcaption>
+        </figure>
+      </li>
+    </ul>
+  </section>
+  <section class="section" aria-labelledby="documenten">
+    <h2 id="documenten">Documenten</h2>
+    <ul class="files">
+      <li><a href="/assets/projects/rc-dac-regeling/verslag-rc-dac.pdf"><span class="label">PDF</span> Volledig practicumverslag</a></li>
+    </ul>
+  </section>
+</article>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <dl class="titleblock">
+        <div><dt>Naam</dt><dd>Jurre Lievaart</dd></div>
+        <div><dt>Studie</dt><dd>Student Werktuigbouwkunde</dd></div>
+        <div><dt>Laatst bijgewerkt</dt><dd><time datetime="2026-11-03">03-11-2026</time></dd></div>
+      </dl>
+    </div>
+  </footer>
+</body>
+</html>

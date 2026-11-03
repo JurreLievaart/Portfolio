@@ -12,7 +12,7 @@ lang: nl
 url: "https://JurreLievaart.github.io"
 # Laat leeg als je repository "jouwgebruikersnaam.github.io" heet.
 # Heet je repository anders (bijv. "portfolio"), vul dan "/portfolio" in.
-baseurl: ""
+baseurl: "/Portfolio"
 
 # Contactgegevens (worden op de Contact-pagina getoond).
 email: "22152490@student.hhs.nl"   # [VERVANG]

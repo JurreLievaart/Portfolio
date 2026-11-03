@@ -193,9 +193,14 @@ h3 { font-size: 1.125rem; }
   aspect-ratio: 4 / 5;
   object-fit: cover;
   background: var(--line);
-  border: 1px solid var(--ink);
+  border: 3px solid var(--ink);
+  border-radius: 0.75rem;
 }
 @media (min-width: 48rem) {
   .hero.has-photo { grid-template-columns: 1fr 17rem; }
   .portrait { max-width: none; }
 }
+
+.prose table { width: 100%; margin-bottom: var(--s2); border-collapse: collapse; font-size: 0.9375rem; }
+.prose th, .prose td { padding: 0.5rem 0.75rem 0.5rem 0; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: break-word; }
+.prose th { font: 0.75rem/1.4 var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
